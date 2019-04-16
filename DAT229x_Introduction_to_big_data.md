@@ -16,9 +16,9 @@
   - Reading and writing in consistent encoding makes sure that we don't loose the data while moving it.
   - file formats that are optimized for high performance in the distributed storage and processing environments typical of big data scenarios
 
-    - To learn about the Avro format, see <http://avro.apache.org/>.
-    - To learn about the ORC format, see <https://orc.apache.org/>.
-    - To learn about the Parquet file format, see <https://parquet.apache.org/>
+    - Avro format <http://avro.apache.org/>.
+    - ORC format <https://orc.apache.org/>.
+    - Parquet file format <https://parquet.apache.org/>
 
 - Data files in Azure
 
@@ -26,8 +26,8 @@
   - azure data lake store, massive quantity of data, allows permissions to be set at different folder hierarchy.
   - containers are like disk volumes
   - block blob allows file to be split and makes it easy to transfer it over network.
-  - To learn more about Azure Storage, see the documentation at <https://docs.microsoft.com/en-us/azure/storage/index>.
-  - To learn more about Azure Data Lake Store, see <https://docs.microsoft.com/en-us/azure/data-lake-store/index>.
+  - Azure Storage the documentation at <https://docs.microsoft.com/en-us/azure/storage/index>.
+  - Azure Data Lake Store <https://docs.microsoft.com/en-us/azure/data-lake-store/index>.
   - azure-cli <https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli>
 
 - Relational database
