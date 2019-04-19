@@ -123,3 +123,13 @@ C++ statements
 - un-initialized variables can't be used
 - can't start the identifier with a digit or special character (except `_`)
 - reserved keywords can't be used
+- const enforces compiler t=from mutating a variable
+- const variable must be assigned at the time of declaration
+
+## Type Conversion
+
+- casting refers to converting one datatype to other
+- some casting are not possible
+- some are possible and may result in data loss
+- `implicit casting` in cpp (int data to long, `widening /expanding conversion`)
+- implicit casting can cause loss of precision, fractional part

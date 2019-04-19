@@ -9,4 +9,5 @@
 - [K8s fundamentals](./K8s_fundamentals.md)
 
 ## Annexure
+
 - [AdventureWorks schema](AdventureWorksLT_ER.pdf)

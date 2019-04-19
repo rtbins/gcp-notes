@@ -2,7 +2,7 @@
 
 ## Containerization
 
-A container is a collection of software processes unified by <mark>one namespace</mark> with access to an os kernel that it shares with other containers and little to no access between containers.
+A container is a collection of software processes unified by `one namespace` with access to an os kernel that it shares with other containers and little to no access between containers.
 
 A runtime instance of a docker image contains three things
 
