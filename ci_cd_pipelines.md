@@ -1,4 +1,4 @@
-# 1. CI/CD Pipeline configurations
+# CI/CD Pipeline configurations
 
 - CI/CD [pipelines](#Pipelines) for a git vendor (gitlab, perforce) is configured using a YAML file `.gitlab-ci.yml`
 - is done at the project level
@@ -6,9 +6,11 @@
   - what to execute using `Gitlab Runner`
   - decisions to make when certain conditions are encountered (upon success or failure)
 
-## 1.1. Annexure
+## Annexure
 
-### 1.1.1. Pipelines
+### Pipelines
+
+---
 
 - top level components of CI/CDD
 - comprises
@@ -19,7 +21,7 @@
 - in pipeline `stage` name is capitalized
 - `only: merge_requests` in a job will run a job only for a merge request
 
-#### 1.1.1.1. Grouping jbs
+#### Grouping jbs
 
 - grouped under job named `test`
   - test 0 3
@@ -33,12 +35,12 @@
   - 2/3 test ruby
   - 3/3 test ruby
 
-#### 1.1.1.2. Badges
+#### Badges
 
 - <https://example.gitlab.com/namespace/project/badges/branch/pipeline.svg>
 - <https://example.gitlab.com/namespace/project/badges/branch/coverage.svg?job=coverage_job_name>
 
-#### 1.1.1.3. Working with pipelines
+#### Working with pipelines
 
 - manually execution from pipeline section of the repository
 - `when: manual` ensures job execution manual only (deploy to production)
