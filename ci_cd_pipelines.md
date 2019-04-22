@@ -10,8 +10,6 @@
 
 ### Pipelines
 
----
-
 - top level components of CI/CDD
 - comprises
   - `jobs` defines what to run (code compilation or test runs)
@@ -50,3 +48,11 @@
 - variables marked as protected can be accessed only by protected branches
 
 Reference: <https://docs.gitlab.com/ee/ci/pipelines.html>
+
+### Runners
+
+- runs the code defined in `.gitlab-ci.yml`
+- are isolated vms that pick up jobs through the coordinator API of Git vendor CI.
+- a runner can be a shared one, specific or a group one
+- Registering a Runner: <https://docs.gitlab.com/ee/ci/runners/README.html#registering-a-shared-runner>
+
