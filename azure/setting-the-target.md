@@ -1,12 +1,27 @@
-# Gathering information about existing enterprise architecture in Microsoft Azure
+# Gathering information about existing enterprise architecture
 
-1. [Understanding Infrastructure](#understanding-infrastructure)
+- [1. Understanding Infrastructure](#1-understanding-infrastructure)
 
-   - [Identifying constraints and dependencies](#identifying-constraints-and-dependencies)
-   - [Identifying compliance requirements](#identifying-compliance-requirements)
-   - [Understand Infrastructure](#understand-infrastructure)
-   - [Identifying Network Infrastructure](#identifying-network-infrastructure)
-   - [Identifying Enterprise application categories](#identifying-enterprise-application-categories)
+  - [Identifying constraints and dependencies](#identifying-constraints-and-dependencies)
+  - [Identifying compliance requirements](#identifying-compliance-requirements)
+  - [Understand Infrastructure](#understand-infrastructure)
+  - [Identifying Network Infrastructure](#identifying-network-infrastructure)
+  - [Identifying Enterprise application categories](#identifying-enterprise-application-categories)
+
+- [2. Identifying service oriented architecture](#2-identifying-service-oriented-architecture)
+  - [ETL](#etl)
+  - [SSO](#sso)
+  - [REST request and security](#rest-request-and-security)
+  - [When to choose each](#when-to-choose-each)
+  - [Service discoverability](#service-discoverability)
+- [3. Identifying security architecture](#3-identifying-security-architecture)
+- [4. Identifying data and data models infrastructure](#4-identifying-data-and-data-models-infrastructure)
+  - [Data migration approaches](#data-migration-approaches)
+  - [Data remanence](#data-remanence)
+- [5. Design patterns](#5-design-patterns)
+- [6. Anti patterns](#6-anti-patterns)
+  - [Wolf tickets](#wolf-tickets)
+- [Reference](#reference)
 
 ## 1. Understanding Infrastructure
 
@@ -231,3 +246,138 @@ Independent and partial are most common solutions. With partial integration as a
 - talk to your users
 - how do they get their work done right now
 - let your integration (or lack of integration) be informed by how people work
+
+## 2. Identifying service oriented architecture
+
+### ETL
+
+- good choice when latency is not important
+- user remanence
+  - focus not only on data in but data out also
+- 3 approaches to remove a person data on leaving a company
+  - set comparison
+    - db with unique user key (A) and a file with all user key (B)
+    - create all users that do not exists in SET A but do exists in SET B
+    - update all users that exists in both
+    - delete all users that exists in SET A but not in SET B
+    - responsibility of user remanence lies with the person creating the file Set B
+    - user might drop off in one night and come back in next
+  - rolling deletion
+    - create a date-stamped record for all users in SET A that do not exists in SET B
+    - delete all user records who have x datestamp records for the last X days
+  - never delete anybody
+
+### SSO
+
+In sso there is no username/pwd being passed, since company B can cryptographically verify the trust set by company A. Who started the process
+
+- service provider initiated
+- identity provider initiated
+
+### REST request and security
+
+- REST requests should always be communicating over HTTPS
+- `Protected` against interception : url path, queryString, headers and body of the request
+- `Not protected` : host address and port
+- server logs can have secure data in the form of plain text
+
+### When to choose each
+
+- `ETL`
+  - Requires a highest level of trust
+  - Providing a service with the data
+  - Higher latency
+- `SSO`
+  - Facilitating authentication only
+  - Can be highly reusable
+  - Generally a more fractured user experience
+- `REST`
+  - Middle Ground between the two
+  - Seamless integration
+  - But you need programmer on both sides
+
+### Service discoverability
+
+Discover
+
+- Existence
+- Structure
+- Availability
+
+e.g. Sql server populates it's server dropdown like this, wrap the service with discoverability protocol.
+
+## 3. Identifying security architecture
+
+- Who needs to do which thing to what? _Authorization_
+- How is that enforced?
+- How is data protected while being transported? How is it protected at rest?
+- How do we know when a breach has occurred? How can we know correct data is being logged so that we can investigate it?
+- `Multi factor authentication` provides a more robust security measure
+
+- Static security code analysis
+  - Analyze the code for quality and patterns before building it into binaries
+  - Virtuous build cycles
+  - Early on, analysis catches a lot of problems
+  - The correction work their way into your style
+  - And the knowledge in the tool is installed in your brain
+  - Tools : SonarQube, hp-fortify
+
+## 4. Identifying data and data models infrastructure
+
+### Data migration approaches
+
+- `Read only push`
+  - Transactional instance remains in service
+  - Periodic, one-way sync
+- `Replication`
+  - Two peer copies
+  - Maybe one on-premises, one in cloud
+  - Consistency or latency - choose one
+- `One-Time transfer`
+  - Take the db offline, transfer it, bring it back up
+  - Downside is downtime
+
+### Data remanence
+
+- When does data cease to remain and how?
+- What does `deleted` mean exactly?
+- Remanence solutions
+  - Delete the data by `Overwriting` the sectors
+  - `Degaussing`, destroy magnetic field of the media (media specific tool)
+  - `Destruction`, phase transition (liquid, gas)
+  - Fry the drive
+  - Getting data out of cloud is like getting milk out of coffee
+
+## 5. Design patterns
+
+- Authentication broker, instead of each application separate identity management
+- `REST` patterns and maturity
+  - `Level 0` : POX (plain old XML)
+  - `Level 1` : Resource
+  - `Level 2` : HTTP verbs
+  - `Level 3` : HATEOAS (application's state)
+    - e.g. in response returning add miles api and other api details
+    - Challenges, no strong standard on relationships
+    - No strong consensus on operations
+    - Small-scale standards are possible
+
+## 6. Anti patterns
+
+### Wolf tickets
+
+- A promise or a threat in the app you won't keep
+- A broad commitment that becomes narrow
+  - Our product support standard X, but does it really?
+- Vendor-specific implementations lock consumers in
+- Proofs of implementations
+  - An automated tool?
+    - like Acid3 for CSS
+  - Certification by an independent standards body
+- Don't accept or hand out Wolf tickets
+- If you commit to standard
+  - you commit to the verification of the standard
+  - Auditors can keep you honest
+
+## Reference
+
+- Chris Behrens, Pluralsight course
