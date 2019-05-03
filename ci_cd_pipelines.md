@@ -3,14 +3,15 @@
 - CI/CD [pipelines](#Pipelines) for a git vendor (gitlab, perforce) is configured using a YAML file `.gitlab-ci.yml`
 - is done at the project level
 - `.gitlab-ci.yml` defines structure and order of the pipeline, also determines
-  - what to execute using `Gitlab Runner`
+  - what to execute using [Gitlab Runner](#runners)
   - decisions to make when certain conditions are encountered (upon success or failure)
+- default three stages: build, test and deploy
 
 ## Annexure
 
 ### Pipelines
 
-- top level components of CI/CDD
+- top level components of CI/CD
 - comprises
   - `jobs` defines what to run (code compilation or test runs)
   - `stages` defines when and how to run, oder of jobs (e.g. test run only after code compilation)
@@ -42,7 +43,7 @@
 
 - manually execution from pipeline section of the repository
 - `when: manual` ensures job execution manual only (deploy to production)
-- `when: delayed` ensures a delay between stages (e.g. partial rollout before a full rollout to production)
+- `when: delayed` ensures a delay between stages (e.g. partial rollout before a full rollout to production), `start_in: 30 minutes`
 - can be triggered through pipeline api
 - a branch can be tagged `protected` to allow specific users to merge or push, to run against runners marked as protected only
 - variables marked as protected can be accessed only by protected branches
